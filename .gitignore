@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### Docker ###
-*/docker-mysql/data/
+docker-mysql/data/

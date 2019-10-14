@@ -1,5 +1,7 @@
 package com.techbow.datadashboard.model.dvo;
 
+import java.util.Date;
+
 public class Data {
     private Long id;
     private Long clientId;
@@ -7,6 +9,8 @@ public class Data {
     private Double bloodPressure;
     private Integer heartBeat;
     private Integer stepCount;
+    private Date createdAt;
+    private Date updatedAt;
 
     public Long getId() {
         return id;
@@ -54,5 +58,21 @@ public class Data {
 
     public void setStepCount(Integer stepCount) {
         this.stepCount = stepCount;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

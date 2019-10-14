@@ -32,4 +32,10 @@ public class DataDashboardController {
     public Data createData(@RequestBody Data data) {
         return dataDao.save(data);
     }
+
+    @GetMapping("/data/{id}")
+    @ResponseBody
+    public Data findDataById(@PathVariable Long id) {
+        return dataDao.findById(id);
+    }
 }
