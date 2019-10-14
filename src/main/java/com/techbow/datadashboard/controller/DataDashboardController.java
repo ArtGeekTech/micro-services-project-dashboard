@@ -29,8 +29,7 @@ public class DataDashboardController {
 
     @PostMapping("/data")
     @ResponseBody
-    public Data createData(@RequestBody Data input) {
-
-        return null;
+    public Data createData(@RequestBody Data data) {
+        return dataDao.save(data);
     }
 }

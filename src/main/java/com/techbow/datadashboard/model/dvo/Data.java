@@ -2,7 +2,7 @@ package com.techbow.datadashboard.model.dvo;
 
 public class Data {
     private Long id;
-    private Long userId;
+    private Long clientId;
     private Double temperature;
     private Double bloodPressure;
     private Integer heartBeat;
@@ -16,12 +16,12 @@ public class Data {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public Double getTemperature() {
