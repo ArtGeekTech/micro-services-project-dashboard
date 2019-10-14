@@ -28,8 +28,9 @@ public class DataDashboardController {
     }
 
     @PostMapping("/data")
+    @ResponseBody
     public Data createData(@RequestBody Data input) {
-        System.out.println("test");
+
         return null;
     }
 }
