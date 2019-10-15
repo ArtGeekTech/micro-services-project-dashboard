@@ -9,5 +9,7 @@ public interface DataDao {
     Data findById(Long id);
     List<Data> findAll();
     List<Data> findByClientId(Long clientId);
-    List<Data> findAllByLimit(String limit);
+    List<Data> findAllByLimit(Integer limit);
+    List<Data> findByClientIdOrderByStepCountDesc(Long clientId);
+    List<Data> findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(Long clientId, Integer start, Integer end);
 }

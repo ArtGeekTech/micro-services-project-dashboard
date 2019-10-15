@@ -38,7 +38,17 @@ public class DataJpaDao implements DataDao {
     }
 
     @Override
-    public List<Data> findAllByLimit(String limit) {
+    public List<Data> findAllByLimit(Integer limit) {
         return repository.findAllByLimit(Integer.valueOf(limit));
+    }
+
+    @Override
+    public List<Data> findByClientIdOrderByStepCountDesc(Long clientId) {
+        return repository.findByClientIdOrderByStepCountDesc(clientId);
+    }
+
+    @Override
+    public List<Data> findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(Long clientId, Integer start, Integer end) {
+        return repository.findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(clientId, start, end);
     }
 }
