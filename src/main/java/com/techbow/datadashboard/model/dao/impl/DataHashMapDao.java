@@ -2,13 +2,14 @@ package com.techbow.datadashboard.model.dao.impl;
 
 import com.techbow.datadashboard.model.dao.DataDao;
 import com.techbow.datadashboard.model.dvo.Data;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+@Component
 public class DataHashMapDao implements DataDao {
 
     private Map<Long, Data> map = new HashMap<>();
