@@ -45,6 +45,11 @@ public class DataDashboardController {
             @RequestParam(name = "end", required = false) String end
     ) {
         if (field != null && field.equals("step_count") && sort != null && sort.equals("desc")) {
+            if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
+                return dataDao.findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(
+                        clientId, Integer.valueOf(start), Integer.valueOf(end)
+                );
+            }
             return dataDao.findByClientIdOrderByStepCountDesc(clientId);
         } else {
             return dataDao.findByClientId(clientId);
