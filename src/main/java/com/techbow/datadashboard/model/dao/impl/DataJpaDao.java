@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Qualifier("jpa")
 public class DataJpaDao implements DataDao {
@@ -16,11 +18,27 @@ public class DataJpaDao implements DataDao {
 
     @Override
     public Data save(Data data) {
-        return repository.save(data);
+        Data res = repository.save(data);
+        return res;
     }
 
     @Override
     public Data findById(Long id) {
         return repository.findById(id).get();
+    }
+
+    @Override
+    public List<Data> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Data> findByClientId(Long clientId) {
+        return repository.findByClientId(clientId);
+    }
+
+    @Override
+    public List<Data> findAllByLimit(Integer limit) {
+        return null;
     }
 }
