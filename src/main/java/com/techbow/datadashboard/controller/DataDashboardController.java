@@ -27,10 +27,20 @@ public class DataDashboardController {
     }
 
 
-    @GetMapping("/data/")
-    public List<Data> getAllData() {
-        return dataDao.findAll();
+//    @GetMapping("/data")
+//    public List<Data> getAllData() {
+//        return dataDao.findAll();
+//    }
+
+    @GetMapping("/data")
+    public List<Data> getAllData(@RequestParam(name = "limit", required = false) String limit) {
+        if (limit == null || limit.isBlank()) {
+            return dataDao.findAll();
+        } else {
+            return dataDao.findAllByLimit(limit);
+        }
     }
+
 
     @GetMapping("/data/client/{clientId}")
     public List<Data> findDataByClientId(@PathVariable Long clientId) {

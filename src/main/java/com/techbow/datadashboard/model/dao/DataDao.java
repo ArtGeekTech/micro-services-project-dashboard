@@ -9,5 +9,5 @@ public interface DataDao {
     Data findById(Long id);
     List<Data> findAll();
     List<Data> findByClientId(Long clientId);
-    List<Data> findAllByLimit(Integer limit);
+    List<Data> findAllByLimit(String limit);
 }
