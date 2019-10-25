@@ -49,10 +49,28 @@ public class DataDashboardController {
                 return dataDao.findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(
                         clientId, Integer.valueOf(start), Integer.valueOf(end)
                 );
+            } else {
+                return dataDao.findByClientIdOrderByStepCountDesc(clientId);
             }
-            return dataDao.findByClientIdOrderByStepCountDesc(clientId);
         } else {
             return dataDao.findByClientId(clientId);
+        }
+    }
+
+
+    @PutMapping("/data/{id}")
+    public Data updateDataById(@PathVariable Long id, @RequestBody Data data) {
+        Data res = dataDao.findById(id);
+        if (res == null) {
+//            throw new RuntimeException("id not exist");
+            return null;
+        } else {
+            res.setClientId(data.getClientId());
+            res.setHeartBeat(data.getHeartBeat());
+            res.setStepCount(data.getStepCount());
+            res.setTemperature(data.getTemperature());
+            dataDao.save(res);
+            return res;
         }
     }
 }

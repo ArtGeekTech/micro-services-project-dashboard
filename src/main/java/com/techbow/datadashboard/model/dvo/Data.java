@@ -1,22 +1,18 @@
 package com.techbow.datadashboard.model.dvo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "data")
-@JsonIgnoreProperties(value = {"id", "createdAt", "updatedAt"}, allowGetters = true)
-@EntityListeners(AuditingEntityListener.class)
-public class Data {
+public class Data implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
