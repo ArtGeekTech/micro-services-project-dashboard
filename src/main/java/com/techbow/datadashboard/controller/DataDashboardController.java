@@ -1,10 +1,10 @@
 package com.techbow.datadashboard.controller;
 
-import com.techbow.datadashboard.cache.Cache;
 import com.techbow.datadashboard.model.dao.DataDao;
 import com.techbow.datadashboard.model.dvo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,24 +17,16 @@ public class DataDashboardController {
     @Qualifier("jpa")
     private DataDao dataDao;
 
-    @Autowired
-    private Cache cache;
-
     @PostMapping("/data")
     public Data createData(@RequestBody Data data) {
         return dataDao.save(data);
     }
 
+    @Cacheable(value = "dataCache", key = "#id")
     @GetMapping("/data/{id}")
     public Data getDataById(@PathVariable Long id) {
-        String key = "data-" + id;
-        if (cache.get(key) != null) {
-            return cache.get(key);
-        } else {
-            Data res = dataDao.findById(id);
-            cache.put(key, res);
-            return res;
-        }
+        System.out.println("\nCalling getDataById from DAO for data: " + id + "\n");
+        return dataDao.findById(id);
     }
 
     @GetMapping("/data")
@@ -81,8 +73,6 @@ public class DataDashboardController {
             res.setStepCount(data.getStepCount());
             res.setTemperature(data.getTemperature());
             dataDao.save(res);
-            String key = "data-" + res.getId();
-            cache.put(key, res);
             return res;
         }
     }
