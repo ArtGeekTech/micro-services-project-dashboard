@@ -1,7 +1,9 @@
 package com.techbow.datadashboard.model.dvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,6 +14,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@Table(name = "data")
+@JsonIgnoreProperties(value = {"id", "createdAt", "updatedAt"}, allowGetters = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Data implements Serializable {
 
     @Id
@@ -25,11 +30,6 @@ public class Data implements Serializable {
     @Min(20)
     @Max(100)
     private Double temperature;
-
-    @NotNull
-    @Min(40)
-    @Max(200)
-    private Integer heartBeat;
 
     @NotNull
     @PositiveOrZero
@@ -67,14 +67,6 @@ public class Data implements Serializable {
 
     public void setTemperature(Double temperature) {
         this.temperature = temperature;
-    }
-
-    public Integer getHeartBeat() {
-        return heartBeat;
-    }
-
-    public void setHeartBeat(Integer heartBeat) {
-        this.heartBeat = heartBeat;
     }
 
     public Integer getStepCount() {

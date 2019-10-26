@@ -4,6 +4,7 @@ import com.techbow.datadashboard.model.dao.DataDao;
 import com.techbow.datadashboard.model.dvo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,9 @@ public class DataDashboardController {
         return dataDao.save(data);
     }
 
-    @Cacheable(value = "dataCache", key = "#id")
+
     @GetMapping("/data/{id}")
+    @Cacheable(value = "dataCache", key = "#id")
     public Data getDataById(@PathVariable Long id) {
         System.out.println("\nCalling getDataById from DAO for data: " + id + "\n");
         return dataDao.findById(id);
@@ -62,6 +64,7 @@ public class DataDashboardController {
 
 
     @PutMapping("/data/{id}")
+    @CachePut(value = "dataCache", key = "#id")
     public Data updateDataById(@PathVariable Long id, @RequestBody Data data) {
         Data res = dataDao.findById(id);
         if (res == null) {
@@ -69,7 +72,6 @@ public class DataDashboardController {
             return null;
         } else {
             res.setClientId(data.getClientId());
-            res.setHeartBeat(data.getHeartBeat());
             res.setStepCount(data.getStepCount());
             res.setTemperature(data.getTemperature());
             dataDao.save(res);
