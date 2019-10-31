@@ -7,9 +7,7 @@ import java.util.List;
 public interface DataDao {
     Data save(Data data);
     Data findById(Long id);
-    List<Data> findAll();
-    List<Data> findByClientId(Long clientId);
-    List<Data> findAllByLimit(Integer limit);
-    List<Data> findByClientIdOrderByStepCountDesc(Long clientId);
-    List<Data> findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(Long clientId, Integer start, Integer end);
+    List<Data> findAll(String limit);
+    List<Data> findByClientId(Long clientId, String field, String sort, String start, String end);
+    Data update(Long id, Data data);
 }

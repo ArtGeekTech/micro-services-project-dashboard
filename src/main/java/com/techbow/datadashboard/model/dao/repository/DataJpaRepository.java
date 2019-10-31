@@ -10,12 +10,15 @@ import java.util.List;
 
 @Repository
 public interface DataJpaRepository extends JpaRepository<Data, Long> {
-    List<Data> findByClientId(Long clientId);
 
     @Query(value = "SELECT * FROM data LIMIT :limit", nativeQuery = true)
     List<Data> findAllByLimit(@Param("limit") Integer limit);
 
+    List<Data> findByClientId(Long clientId);
+
+    List<Data> findByClientIdOrderByStepCount(Long clientId);
+
     List<Data> findByClientIdOrderByStepCountDesc(Long clientId);
 
-    List<Data> findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(Long clientId, Integer start, Integer end);
+    List<Data> findByClientIdAndStepCountIsBetween(Long clientId, Integer start, Integer end);
 }

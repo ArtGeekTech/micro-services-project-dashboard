@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Qualifier("jpa")
+@Qualifier("dataJpaDao")
 public class DataJpaDao implements DataDao {
 
     @Autowired
@@ -18,8 +18,7 @@ public class DataJpaDao implements DataDao {
 
     @Override
     public Data save(Data data) {
-        Data res = repository.save(data);
-        return res;
+        return repository.save(data);
     }
 
     @Override
@@ -28,27 +27,43 @@ public class DataJpaDao implements DataDao {
     }
 
     @Override
-    public List<Data> findAll() {
-        return repository.findAll();
+    public List<Data> findAll(String limit) {
+        if (limit == null || limit.isEmpty()) {
+            return repository.findAll();
+        } else {
+            return repository.findAllByLimit(Integer.valueOf(limit));
+        }
     }
 
     @Override
-    public List<Data> findByClientId(Long clientId) {
-        return repository.findByClientId(clientId);
+    public List<Data> findByClientId(Long clientId, String field, String sort, String start, String end) {
+        if (field != null && field.equals("step_count")) {
+            if (sort != null && sort.equals("desc")) {
+                return repository.findByClientIdOrderByStepCountDesc(clientId);
+            } else if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
+                return repository.findByClientIdAndStepCountIsBetween(
+                        clientId, Integer.valueOf(start), Integer.valueOf(end)
+                );
+            }  else {
+                return repository.findByClientIdOrderByStepCount(clientId);
+            }
+        } else {
+            return repository.findByClientId(clientId);
+        }
     }
 
     @Override
-    public List<Data> findAllByLimit(Integer limit) {
-        return repository.findAllByLimit(Integer.valueOf(limit));
-    }
-
-    @Override
-    public List<Data> findByClientIdOrderByStepCountDesc(Long clientId) {
-        return repository.findByClientIdOrderByStepCountDesc(clientId);
-    }
-
-    @Override
-    public List<Data> findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(Long clientId, Integer start, Integer end) {
-        return repository.findByClientIdAndStepCountIsBetweenOrderByStepCountDesc(clientId, start, end);
+    public Data update(Long id, Data data) {
+        Data res = findById(id);
+        if (res == null) {
+//            throw new RuntimeException("id not exist");
+            return null;
+        } else {
+            res.setClientId(data.getClientId());
+            res.setStepCount(data.getStepCount());
+            res.setTemperature(data.getTemperature());
+            repository.save(res);
+            return res;
+        }
     }
 }
