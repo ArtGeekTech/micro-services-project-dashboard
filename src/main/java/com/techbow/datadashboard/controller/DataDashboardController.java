@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class DataDashboardController {
 
-    @Autowired
+    @Autowired // we achieve decoupling by DI
     @Qualifier("dataJpaDao")
     private DataDao dataDao;
 
